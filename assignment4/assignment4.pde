@@ -2,7 +2,7 @@ int[][] map = new int[10][9];
 Open[][] revealed = new Open[10][9];
 Closed[][] unrevealed = new Closed[10][9];
 int difficulty = 16;
-boolean isClassic = true;
+boolean isClassic = false;
 
 void setup()
 {
