@@ -12,7 +12,7 @@ class Closed
   
   void update()
   {
-    
+    //render();
   }
   
   void render()
