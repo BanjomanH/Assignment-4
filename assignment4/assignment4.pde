@@ -41,9 +41,28 @@ void draw()
       {
         for (int j = 0; j < 9; j++)
         {
-          if (unrevealed[i][j].testMouse() == true)
+          if (unrevealed[i][j].testMouse() == true && unrevealed[i][j].isFlagged == false)
           {
             unrevealed[i][j].open();
+          }
+        }
+      }
+    }
+  } else if (rClick == true)
+  {
+    rClick = false;
+    for (int i = 0; i < 10; i++)
+    {
+      for (int j = 0; j < 9; j++)
+      {
+        if (unrevealed[i][j].testMouse() == true)
+        {
+          if (unrevealed[i][j].isFlagged == true)
+          {
+            unrevealed[i][j].isFlagged = false;
+          } else
+          {
+            unrevealed[i][j].isFlagged = true;
           }
         }
       }
