@@ -3,6 +3,8 @@ Open[][] revealed = new Open[10][9];
 Closed[][] unrevealed = new Closed[10][9];
 int difficulty = 16;
 boolean isClassic = false;
+boolean lClick = false;
+boolean rClick = false;
 
 void setup()
 {
@@ -16,7 +18,7 @@ void setup()
     }
   }
   // TEMPORARY CODE
-  generateLevel(0 ,0);
+  generateLevel(0, 0);
 }
 
 void draw()
@@ -28,6 +30,23 @@ void draw()
     {
       revealed[i][j].update();
       unrevealed[i][j].update();
+    }
+  }
+  if (lClick == true)
+  {
+    lClick = false;
+    if (mouseY < height - 40)
+    {
+      for (int i = 0; i < 10; i++)
+      {
+        for (int j = 0; j < 9; j++)
+        {
+          if (unrevealed[i][j].testMouse() == true)
+          {
+            unrevealed[i][j].open();
+          }
+        }
+      }
     }
   }
 }
@@ -59,5 +78,14 @@ void surround(int x, int y, int increase)
         map[x + i][y + j] += increase;
       }
     }
+  }
+}
+
+void mousePressed()
+{
+  if (mouseButton == LEFT) {
+    lClick = true;
+  } else if (mouseButton == RIGHT) {
+    rClick = true;
   }
 }

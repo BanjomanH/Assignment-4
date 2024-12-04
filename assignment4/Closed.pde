@@ -11,12 +11,33 @@ class Closed
     mapX = i;
     mapY = j;
     isFlagged = false;
+    isOpen = true;
     position = new PVector(i * 40, j * 40);
   }
 
   void update()
   {
-    //render();
+    if (isOpen == true)
+    {
+      render();
+    }
+  }
+
+  void open()
+  {
+    isOpen = false;
+  }
+
+  boolean testMouse()
+  {
+    boolean hovering = false;
+
+    if (mouseX > mapX * 40 && mouseX < (mapX * 40) + 40 && mouseY > mapY * 40 && mouseY < (mapY * 40) + 40)
+    {
+      hovering = true;
+    }
+
+    return hovering;
   }
 
   void render()
