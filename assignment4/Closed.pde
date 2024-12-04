@@ -1,22 +1,44 @@
 class Closed
 {
   PVector position;
+  boolean isOpen;
+  boolean isFlagged;
   int mapX;
   int mapY;
-  
+
   Closed(int i, int j)
   {
     mapX = i;
     mapY = j;
+    isFlagged = false;
+    position = new PVector(i * 40, j * 40);
   }
-  
+
   void update()
   {
-    
+    //render();
   }
-  
+
   void render()
   {
-    
+    int filePosition;
+    if (isFlagged == false)
+    {
+      filePosition = 1;
+    } else
+    {
+      filePosition = 2;
+    }
+    PImage tile;
+
+    if (isClassic == false)
+    {
+      tile = loadImage("minesweeper tiles" + filePosition + ".png");
+    } else
+    {
+      tile = loadImage("alt tiles-Sheet" + filePosition + ".png");
+    }
+    tile.resize(40, 40);
+    image(tile, position.x, position.y);
   }
 }
