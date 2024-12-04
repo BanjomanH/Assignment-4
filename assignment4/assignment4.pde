@@ -10,8 +10,8 @@ void setup()
   {
     for (int j = 0; j < 9; j++)
     {
-      Open[i][j] = new Open(i, j);
-      Closed[i][j] = new Closed(i, j);
+      revealed[i][j] = new Open(i, j);
+      unrevealed[i][j] = new Closed(i, j);
     }
   }
 }
