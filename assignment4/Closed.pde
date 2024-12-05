@@ -1,6 +1,8 @@
 class Closed
 {
   PVector position;
+  PVector acceleration = new PVector(0, 0);
+  PVector velocity = new PVector(0, 0);
   boolean isOpen;
   boolean isFlagged;
   int mapX;
@@ -20,11 +22,19 @@ class Closed
     if (isOpen == true)
     {
       render();
+    } else
+    {
+      acceleration = new PVector(acceleration.x, acceleration.y += 1);
+      velocity = velocity.add(acceleration);
+      position = position.add(velocity);
+      render();
     }
   }
 
   void open()
   {
+    acceleration = new PVector(random(-2, 2), -5);
+
     isOpen = false;
   }
 
