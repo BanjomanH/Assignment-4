@@ -126,7 +126,10 @@ void surround(int x, int y, int increase)
       {
         if (increase < 0)
         {
-          unrevealed[x + i][y + j].open();
+          if (unrevealed[x + i][y + j].isOpen == true)
+          {
+            unrevealed[x + i][y + j].open();
+          }
         } else
         {
           map[x + i][y + j] += increase;
