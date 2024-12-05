@@ -5,6 +5,7 @@ class Closed
   PVector velocity = new PVector(0, 0);
   boolean isOpen;
   boolean isFlagged;
+  int size = 40;
   int mapX;
   int mapY;
 
@@ -12,6 +13,7 @@ class Closed
   {
     mapX = i;
     mapY = j;
+    size = 40;
     isFlagged = false;
     isOpen = true;
     position = new PVector(i * 40, j * 40);
@@ -27,6 +29,7 @@ class Closed
       acceleration = new PVector(acceleration.x, acceleration.y += 1);
       velocity = velocity.add(acceleration);
       position = position.add(velocity);
+      size--;
       render();
     }
   }
@@ -34,6 +37,7 @@ class Closed
   void open()
   {
     acceleration = new PVector(random(-2, 2), -5);
+    size = 35;
 
     isOpen = false;
   }
@@ -69,7 +73,10 @@ class Closed
     {
       tile = loadImage("alt tiles-Sheet" + filePosition + ".png");
     }
-    tile.resize(40, 40);
+    if (size > 0)
+    {
+      tile.resize(size, size);
+    } 
     image(tile, position.x, position.y);
   }
 }

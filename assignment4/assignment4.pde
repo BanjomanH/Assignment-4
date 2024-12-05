@@ -30,9 +30,24 @@ void draw()
     for (int j = 0; j < 9; j++)
     {
       revealed[i][j].update();
-      unrevealed[i][j].update();
+      if (unrevealed[i][j].isOpen == true)
+      {
+        unrevealed[i][j].update();
+      }
     }
   }
+
+  for (int i = 0; i < 10; i++)
+  {
+    for (int j = 0; j < 9; j++)
+    {
+      if (unrevealed[i][j].isOpen == false)
+      {
+        unrevealed[i][j].update();
+      }
+    }
+  }
+
   if (lClick == true)
   {
     lClick = false;
