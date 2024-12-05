@@ -38,7 +38,13 @@ class Closed
   {
     acceleration = new PVector(random(-2, 2), -5);
     size = 35;
-
+    if (map[mapX][mapY] < 9)
+    {
+      openedTiles++;
+    } else
+    {
+      openedTiles = -1;
+    }
     isOpen = false;
   }
 
@@ -76,7 +82,7 @@ class Closed
     if (size > 0)
     {
       tile.resize(size, size);
-    } 
+    }
     image(tile, position.x, position.y);
   }
 }

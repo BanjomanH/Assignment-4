@@ -2,10 +2,12 @@ int[][] map = new int[10][9];
 Open[][] revealed = new Open[10][9];
 Closed[][] unrevealed = new Closed[10][9];
 int difficulty = 16;
+int openedTiles = 0;
 boolean isClassic = false;
 boolean lClick = false;
 boolean rClick = false;
 boolean gameStart = false;
+boolean canClick = true;
 
 void setup()
 {
@@ -23,6 +25,14 @@ void setup()
 void draw()
 {
   background(255);
+  if (openedTiles + difficulty == 90)
+  {
+    displayScreen(0);
+  } else if (openedTiles < 0)
+  {
+    displayScreen(1);
+  }
+  println(openedTiles);
 
   for (int i = 0; i < 10; i++)
   {
@@ -76,17 +86,31 @@ void draw()
   }
 }
 
+void displayScreen(int context)
+{
+  if (context == 0)
+  {
+    println("Victory!");
+  } else if (context == 1)
+  {
+    println("Defeat!");
+  } else
+  {
+    println("New Game");
+  }
+}
+
 void generateLevel(int clickedX, int clickedY)
 {
   for (int i = 0; i < difficulty; i++)
   {
     int mineX = int(random(0, 10));
     int mineY = int(random(0, 9));
-      while (map[mineX][mineY] > 8 || (clickedX - 2 < mineX && clickedX + 2 > mineX && clickedY - 2 < mineY && clickedY + 2 > mineY))
-      {
-        mineX = int(random(0, 10));
-        mineY = int(random(0, 9));
-      }
+    while (map[mineX][mineY] > 8 || (clickedX - 2 < mineX && clickedX + 2 > mineX && clickedY - 2 < mineY && clickedY + 2 > mineY))
+    {
+      mineX = int(random(0, 10));
+      mineY = int(random(0, 9));
+    }
     map[mineX][mineY] = 9;
     surround(mineX, mineY, 1);
   }
@@ -114,9 +138,12 @@ void surround(int x, int y, int increase)
 
 void mousePressed()
 {
-  if (mouseButton == LEFT) {
-    lClick = true;
-  } else if (mouseButton == RIGHT) {
-    rClick = true;
+  if (canClick == true)
+  {
+    if (mouseButton == LEFT) {
+      lClick = true;
+    } else if (mouseButton == RIGHT) {
+      rClick = true;
+    }
   }
 }
