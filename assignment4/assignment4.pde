@@ -24,6 +24,7 @@ void setup()
 void draw()
 {
   background(255);
+
   for (int i = 0; i < 10; i++)
   {
     for (int j = 0; j < 9; j++)
@@ -37,35 +38,20 @@ void draw()
     lClick = false;
     if (mouseY < height - 40)
     {
-      for (int i = 0; i < 10; i++)
+      if (unrevealed[mouseX / 40][mouseY / 40].testMouse() == true && unrevealed[mouseX / 40][mouseY / 40].isFlagged == false)
       {
-        for (int j = 0; j < 9; j++)
-        {
-          if (unrevealed[i][j].testMouse() == true && unrevealed[i][j].isFlagged == false)
-          {
-            unrevealed[i][j].open();
-          }
-        }
+        unrevealed[mouseX / 40][mouseY / 40].open();
       }
     }
   } else if (rClick == true)
   {
     rClick = false;
-    for (int i = 0; i < 10; i++)
+    if (unrevealed[mouseX / 40][mouseY / 40].isFlagged == true)
     {
-      for (int j = 0; j < 9; j++)
-      {
-        if (unrevealed[i][j].testMouse() == true)
-        {
-          if (unrevealed[i][j].isFlagged == true)
-          {
-            unrevealed[i][j].isFlagged = false;
-          } else
-          {
-            unrevealed[i][j].isFlagged = true;
-          }
-        }
-      }
+      unrevealed[mouseX / 40][mouseY / 40].isFlagged = false;
+    } else
+    {
+      unrevealed[mouseX / 40][mouseY / 40].isFlagged = true;
     }
   }
 }
