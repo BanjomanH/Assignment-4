@@ -5,6 +5,7 @@ int difficulty = 16;
 boolean isClassic = false;
 boolean lClick = false;
 boolean rClick = false;
+boolean gameStart = false;
 
 void setup()
 {
@@ -17,8 +18,6 @@ void setup()
       unrevealed[i][j] = new Closed(i, j);
     }
   }
-  // TEMPORARY CODE
-  generateLevel(0, 0);
 }
 
 void draw()
@@ -50,6 +49,12 @@ void draw()
 
   if (lClick == true)
   {
+    if (gameStart == false)
+    {
+      gameStart = true;
+      generateLevel(mouseX/40, mouseY/40);
+    }
+
     lClick = false;
     if (mouseY < height - 40)
     {

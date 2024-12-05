@@ -18,7 +18,7 @@ class Open
       render();
       if (map[mapX][mapY] == 0)
       {        
-        surround(mapX, mapY, 0);
+        surround(mapX, mapY, -1);
       }
     }
   }
