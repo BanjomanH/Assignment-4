@@ -18,7 +18,6 @@ void setup()
 void restart()
 {
   openedTiles = 0;
-  isClassic = false;
   lClick = false;
   rClick = false;
   gameStart = false;
@@ -44,7 +43,6 @@ void draw()
   {
     displayScreen(1);
   }
-  println(openedTiles);
 
   for (int i = 0; i < 10; i++)
   {
@@ -71,27 +69,40 @@ void draw()
 
   if (lClick == true)
   {
-    if (gameStart == false)
+    if (gameStart == false && canClick == true)
     {
       gameStart = true;
       generateLevel(mouseX/40, mouseY/40);
     }
 
     lClick = false;
-    if (mouseY < height - 40)
+    if (mouseY < height - 40  && canClick == true)
     {
       if (unrevealed[mouseX / 40][mouseY / 40].testMouse() == true && unrevealed[mouseX / 40][mouseY / 40].isFlagged == false)
       {
         unrevealed[mouseX / 40][mouseY / 40].open();
       }
-    } else
+    } else if (mouseY > height - 40)
     {
       if (mouseX < 40)
       {
         restart();
+      } else if (mouseX < 120)
+      {
+        if (isClassic == true)
+        {
+          isClassic = false;
+        } else
+        {
+          isClassic = true;
+        }
+      } else if (mouseX > 300)
+      {
+        difficulty = constrain((mouseX - 310)/2, 1, 31);
+        println(difficulty);
       }
     }
-  } else if (rClick == true)
+  } else if (rClick == true && canClick == true)
   {
     rClick = false;
     if (unrevealed[mouseX / 40][mouseY / 40].isFlagged == true)
@@ -111,6 +122,13 @@ void draw()
 
   bottomBar.resize(400, 40);
   image(bottomBar, 0, 360);
+  
+  fill(200);
+  rect(320, 378, difficulty * 2, 5);
+  stroke(200);
+  strokeWeight(3);
+  rect((difficulty * 2) + 310, 375, 10, 10);
+  noStroke();
 }
 
 void displayScreen(int context)
@@ -169,12 +187,9 @@ void surround(int x, int y, int increase)
 
 void mousePressed()
 {
-  if (canClick == true)
-  {
-    if (mouseButton == LEFT) {
-      lClick = true;
-    } else if (mouseButton == RIGHT) {
-      rClick = true;
-    }
+  if (mouseButton == LEFT) {
+    lClick = true;
+  } else if (mouseButton == RIGHT) {
+    rClick = true;
   }
 }
