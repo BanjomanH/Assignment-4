@@ -3,6 +3,7 @@ Open[][] revealed = new Open[10][9];
 Closed[][] unrevealed = new Closed[10][9];
 int difficulty = 16;
 int openedTiles = 0;
+int mines = 16;
 boolean isClassic = false;
 boolean lClick = false;
 boolean rClick = false;
@@ -36,7 +37,7 @@ void restart()
 void draw()
 {
   background(255);
-  if (openedTiles + difficulty == 90)
+  if (openedTiles + mines == 90)
   {
     displayScreen(0);
   } else if (openedTiles < 0)
@@ -122,7 +123,7 @@ void draw()
 
   bottomBar.resize(400, 40);
   image(bottomBar, 0, 360);
-  
+
   fill(200);
   rect(320, 378, difficulty * 2, 5);
   stroke(200);
@@ -148,6 +149,7 @@ void displayScreen(int context)
 
 void generateLevel(int clickedX, int clickedY)
 {
+  mines = difficulty;
   for (int i = 0; i < difficulty; i++)
   {
     int mineX = int(random(0, 10));
