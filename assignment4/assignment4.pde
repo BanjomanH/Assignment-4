@@ -82,11 +82,11 @@ void generateLevel(int clickedX, int clickedY)
   {
     int mineX = int(random(0, 10));
     int mineY = int(random(0, 9));
-    while (map[mineX][mineY] > 8 || (clickedX == mineX && clickedY == mineY))
-    {
-      mineX = int(random(0, 10));
-      mineY = int(random(0, 9));
-    }
+      while (map[mineX][mineY] > 8 || (clickedX - 2 < mineX && clickedX + 2 > mineX && clickedY - 2 < mineY && clickedY + 2 > mineY))
+      {
+        mineX = int(random(0, 10));
+        mineY = int(random(0, 9));
+      }
     map[mineX][mineY] = 9;
     surround(mineX, mineY, 1);
   }
