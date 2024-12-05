@@ -30,7 +30,7 @@ void draw()
     for (int j = 0; j < 9; j++)
     {
       revealed[i][j].update();
-      if (unrevealed[i][j].isOpen == true)
+      if (unrevealed[i][j].isOpen == true && unrevealed[i][j].size > 0)
       {
         unrevealed[i][j].update();
       }
@@ -41,7 +41,7 @@ void draw()
   {
     for (int j = 0; j < 9; j++)
     {
-      if (unrevealed[i][j].isOpen == false)
+      if (unrevealed[i][j].isOpen == false && unrevealed[i][j].size > 0)
       {
         unrevealed[i][j].update();
       }
@@ -95,7 +95,13 @@ void surround(int x, int y, int increase)
     {
       if (x + i > -1 && x + i < 10 && y + j > -1 && y + j < 9)
       {
-        map[x + i][y + j] += increase;
+        if (increase < 0)
+        {
+          unrevealed[x + i][y + j].open();
+        } else
+        {
+          map[x + i][y + j] += increase;
+        }
       }
     }
   }
