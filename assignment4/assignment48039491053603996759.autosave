@@ -4,9 +4,7 @@ Closed[][] unrevealed = new Closed[10][9];
 int difficulty = 16;
 int openedTiles = 0;
 int mines = 16;
-int screenContext = 1;
-int time = 0;
-int record = 999;
+int screenContext
 boolean isClassic = false;
 boolean lClick = false;
 boolean rClick = false;
@@ -16,13 +14,11 @@ boolean canClick = true;
 void setup()
 {
   size(400, 400);
-  frameRate(30);
   restart();
 }
 
 void restart()
 {
-  time = 0;
   openedTiles = 0;
   lClick = false;
   rClick = false;
@@ -41,18 +37,13 @@ void restart()
 
 void draw()
 {
-  println(gameStart);
-  if (gameStart == true && frameCount % 30 == 0)
-  {
-    time++;
-  }
   background(255);
   if (openedTiles + mines == 90)
   {
-    screenContext = 3;
+    displayScreen(0);
   } else if (openedTiles < 0)
   {
-    screenContext = 2;
+    displayScreen(1);
   }
 
   for (int i = 0; i < 10; i++)
@@ -80,45 +71,37 @@ void draw()
 
   if (lClick == true)
   {
-    if (screenContext != 0)
+    if (gameStart == false && canClick == true)
     {
-      screenContext = 0;
-      lClick = false;
-      restart();
-    } else
-    {
-      if (gameStart == false && canClick == true)
-      {
-        gameStart = true;
-        generateLevel(mouseX/40, mouseY/40);
-      }
+      gameStart = true;
+      generateLevel(mouseX/40, mouseY/40);
+    }
 
-      lClick = false;
-      if (mouseY < height - 40  && canClick == true)
+    lClick = false;
+    if (mouseY < height - 40  && canClick == true)
+    {
+      if (unrevealed[mouseX / 40][mouseY / 40].testMouse() == true && unrevealed[mouseX / 40][mouseY / 40].isFlagged == false)
       {
-        if (unrevealed[mouseX / 40][mouseY / 40].testMouse() == true && unrevealed[mouseX / 40][mouseY / 40].isFlagged == false)
-        {
-          unrevealed[mouseX / 40][mouseY / 40].open();
-        }
-      } else if (mouseY > height - 40)
+        unrevealed[mouseX / 40][mouseY / 40].open();
+      }
+    } else if (mouseY > height - 40)
+    {
+      if (mouseX < 40)
       {
-        if (mouseX < 40)
+        restart();
+      } else if (mouseX < 120)
+      {
+        if (isClassic == true)
         {
-          restart();
-        } else if (mouseX < 120)
+          isClassic = false;
+        } else
         {
-          if (isClassic == true)
-          {
-            isClassic = false;
-          } else
-          {
-            isClassic = true;
-          }
-        } else if (mouseX > 300)
-        {
-          difficulty = constrain((mouseX - 310)/2, 1, 31);
-          println(difficulty);
+          isClassic = true;
         }
+      } else if (mouseX > 300)
+      {
+        difficulty = constrain((mouseX - 310)/2, 1, 31);
+        println(difficulty);
       }
     }
   } else if (rClick == true && canClick == true)
@@ -142,43 +125,26 @@ void draw()
   bottomBar.resize(400, 40);
   image(bottomBar, 0, 360);
 
-  text(time, 200, 390);
-
   fill(200);
   rect(320, 378, difficulty * 2, 5);
   stroke(200);
   strokeWeight(3);
   rect((difficulty * 2) + 310, 375, 10, 10);
   noStroke();
-
-  if (screenContext !=0)
-  {
-    displayScreen();
-  }
 }
 
-void displayScreen()
+void displayScreen(int context)
 {
   canClick = false;
-  gameStart = false;
-  textAlign(CENTER);
-  textSize(25);
-  fill(0, 0, 0, 100);
-  rect(0, 0, 400, 400);
-  fill(255);
-  if (screenContext == 1)
+  if (context == 0)
   {
-    text("Welcome to MINESWEEPER, baby! Click anywhere to play", 60, 120, 270, 280);
-  } else if (screenContext == 2)
+    println("Victory!");
+  } else if (context == 1)
   {
-    text("GAME OVER. You had " + (90 - openedTiles - mines) + " spaces left to clear! Click anywhere to restart", 60, 120, 270, 280);
+    println("Defeat!");
   } else
   {
-    if (time < record)
-    {
-      record = time;
-    }
-    text("VICTORY. You beat the level in " + time + ". Highscore: " + record + ". Click anywhere to restart", 60, 120, 270, 280);
+    println("New Game");
   }
 }
 
