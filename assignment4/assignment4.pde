@@ -12,6 +12,18 @@ boolean canClick = true;
 void setup()
 {
   size(400, 400);
+  restart();
+}
+
+void restart()
+{
+  openedTiles = 0;
+  isClassic = false;
+  lClick = false;
+  rClick = false;
+  gameStart = false;
+  canClick = true;
+  map = new int[10][9];
   for (int i = 0; i < 10; i++)
   {
     for (int j = 0; j < 9; j++)
@@ -72,6 +84,12 @@ void draw()
       {
         unrevealed[mouseX / 40][mouseY / 40].open();
       }
+    } else
+    {
+      if (mouseX < 40)
+      {
+        restart();
+      }
     }
   } else if (rClick == true)
   {
@@ -84,10 +102,20 @@ void draw()
       unrevealed[mouseX / 40][mouseY / 40].isFlagged = true;
     }
   }
+
+  PImage bottomBar = loadImage("minesweeperBottomBar.png");
+  if (isClassic == true)
+  {
+    bottomBar = loadImage("ClassicBottomBar.png");
+  }
+
+  bottomBar.resize(400, 40);
+  image(bottomBar, 0, 360);
 }
 
 void displayScreen(int context)
 {
+  canClick = false;
   if (context == 0)
   {
     println("Victory!");
